@@ -2,6 +2,7 @@ import { Grid } from '@material-ui/core'
 import React, { useEffect, useState } from 'react';
 import Boxes from './Boxes/Boxes';
 import axios from '../../axios'
+import Loader from '../UI/Loader/Loader';
 
 export default function Content() {
 
@@ -17,18 +18,15 @@ export default function Content() {
             })
     }, [])
 
-    let data = '';
-    if (isLoading === false) {
-        data = users.map(user => (
+    let data = isLoading ? <Loader /> :
+        users.map(user => (
             <Boxes
                 name={user.login}
                 id={user.id}
                 img={user.avatar_url}
                 url={user.html_url}
-                key={user.id}
-            />
-        ))
-    }
+                key={user.id} />)
+        );
 
     return (
         <div style={{ marginTop: '100px' }}>
